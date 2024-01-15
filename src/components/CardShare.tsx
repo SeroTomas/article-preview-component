@@ -1,41 +1,32 @@
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import ShareMobile from "./ShareMobile.tsx";
 import ShareIcon from "./ShareIcon.tsx";
+import useDevice from "../hooks/useDevice.ts";
+import ShareDesktop from "./ShareDesktop.tsx";
+
+const style = {
+    noActive: "z-50 bg-c-lGblue h-8 w-8 flex items-center justify-center rounded-full",
+    active: "z-50 bg-c-desDarkBlue h-8 w-8 flex items-center justify-center rounded-full"
+}
 
 const CardShare = () => {
 
     const [active, setActive] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
 
-    const desktopMediaQuery = window.matchMedia("(min-width: 1440px)")
-
-    const handleWindow = (event: MediaQueryListEvent) => {
-        const isDesktop = event.matches
-        isDesktop ? setIsMobile(false) : setIsMobile(true)
-    }
-
-    const initialWindow = () => {
-        const mobile = window.innerWidth < 1440;
-        mobile ? setIsMobile(true) : setIsMobile(false)
-    }
+    const mobile = useDevice();
 
     const handleClick = () => {
         setActive(!active)
     }
 
-    useEffect(() => {
-        initialWindow()
-        desktopMediaQuery.addEventListener('change', handleWindow)
-        return () => { desktopMediaQuery.removeEventListener('change', handleWindow) }
-    }, [])
-
     return (
         <>
-            <button onClick={handleClick} className="z-50">
-                <ShareIcon />
+            <button onClick={handleClick} className={active ? style.active : style.noActive}>
+                <ShareIcon active={active} />
             </button>
-            {active ? isMobile ? <ShareMobile /> : null : null}
+
+            {active ? mobile ? <ShareMobile /> : <ShareDesktop /> : null}
         </>
     )
 }

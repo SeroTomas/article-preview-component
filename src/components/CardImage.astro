@@ -6,10 +6,10 @@ interface Props {
 const { image } = Astro.props;
 ---
 
-<div class="h-[230px] overflow-hidden ">
+<div class="h-[230px] overflow-hidden 2xl:h-full">
   <img
     src={image}
     alt="Article Image"
-    class="rounded-t-xl 2xl:rounded-none 2xl:rounded-l-xl"
+    class="rounded-t-xl 2xl:rounded-none 2xl:rounded-l-xl "
   />
 </div>

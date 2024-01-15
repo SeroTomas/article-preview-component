@@ -1,7 +1,7 @@
 ---
 import CardImage from "./CardImage.astro";
 import CardBody from "./CardBody.astro";
-import CardUser from "./CardUser.astro";
+import CardUser from "./CardUser.tsx";
 
 const articleInfo = {
   image: "images/drawers.jpg",
@@ -20,10 +20,10 @@ const articleInfo = {
 const { image, body, user } = articleInfo;
 ---
 
-<article class="w-[350px] flex flex-col">
+<article class="w-[350px] flex flex-col 2xl:flex-row 2xl:w-[850px]">
   <CardImage image={image} />
-  <div class="bg-white">
+  <div class="bg-white rounded-b-xl 2xl:rounded-none 2xl:rounded-r-xl">
     <CardBody {...body} />
-    <CardUser {...user}/>
+    <CardUser {...user} client:only/>
   </div>
 </article>
